@@ -5,6 +5,7 @@
 
 struct letter
 {
+    std::string word;
     char key;
     std::vector<letter*> children; //Up to 26 children
     letter* parent;
@@ -20,8 +21,11 @@ class alphabet
         void dictTraverse();
         letter* findWord(std::string target);
         void traverseDict();
-        void recurPrint(std::string start);
-        void recurPrint(letter* start);
+        void recurPrint(letter* start, int minLength, int maxLength);
+        void recurPrint(int minLength = 0, int maxLength = 28);
+        std::string makeLower(std::string lower);
+        letter* addLetter(letter* parent, char baby);
+        //void recurPrint();
     protected:
     private:
         letter head;

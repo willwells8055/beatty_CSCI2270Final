@@ -20,10 +20,11 @@ int main()
 bool menuDisp()
 {
     int choice;
+    cout << endl << endl;
     cout << "====== Main Menu ======" << endl;
     cout << "1. Print Dictionary" << endl;
     cout << "2. Search for a word" << endl;
-    cout << "3. Print Dictionary Subset" << endl; //Could do by lenth, first letter or two, etc.
+    cout << "3. Print Dictionary Subset" << endl; //Could do by length, first letter or two, etc.
     cout << "4. Traverse Dictionary" << endl;
     cout << ". Quit" << endl;
     cin >> choice;
@@ -32,6 +33,7 @@ bool menuDisp()
     {
     case 1:
         {
+            dict.recurPrint();
             break;
         }
     case 2:
@@ -48,7 +50,7 @@ bool menuDisp()
                 cout << "\"" << target << "\"" << " was not found" << endl;
                 cout << "Do you wish to add it to the dictionary? Y/N" << endl;
                 cin >> yn;
-                if(yn.compare("y") == 0 || yn.compare("Y"))
+                if(yn.compare("y") == 0 || yn.compare("Y") == 0)
                 {
                     dict.addWord(target);
                     cout << "\"" << target << "\"" << " was added to the dictionary" << endl;
