@@ -35,6 +35,5 @@ class alphabet
 
 // TODO
 //1. Finish readMe
-//2. Fix Lindsay's "wal" prefix bug.  :(
 
 #endif // ALPHABET_H

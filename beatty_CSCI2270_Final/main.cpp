@@ -46,7 +46,7 @@ bool menuDisp()
             cout << "Enter the word you wish to find: " << endl;
             cin >> target;
             found = dict.findWord(target);
-            if(found == nullptr)
+            if(!found->isLeaf)
             {
                 cout << endl;
                 cout << "\"" << target << "\"" << " was not found" << endl;

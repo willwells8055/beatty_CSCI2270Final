@@ -64,14 +64,7 @@ letter* alphabet::findWord(std::string target) //Only returns if it's a word.  F
             return nullptr;
         }
     }
-    if(temp->isLeaf)
-    {
-        return temp;
-    }
-    else
-    {
-        return nullptr;
-    }
+    return temp;
 }
 
 letter* alphabet::addLetter(letter* parent, char baby)
@@ -248,7 +241,7 @@ void alphabet::spellCheck(std::string sentence)
     for(int i {}; i < wordList.size(); i++)
         {
             currentWord = findWord(wordList[i]);
-            if(currentWord == nullptr)
+            if(!currentWord->isLeaf)
             {
                 cout << "The word \"" << wordList[i] << "\" was not found. \n Add to dictionary? Y/N: "<< endl;
                 cin >> yn;
