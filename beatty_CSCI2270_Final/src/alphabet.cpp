@@ -2,6 +2,8 @@
 #include <fstream>
 #include <iostream>
 #include <algorithm>
+#include <string.h>
+#include <sstream>
 
 using namespace std;
 
@@ -11,7 +13,7 @@ alphabet::alphabet()
 
     head.isLeaf = false;
 
-    //int longest = 0;
+    MAX_LENGTH = 0;
 
     ifstream infile("wordsEn.txt");
 
@@ -19,10 +21,10 @@ alphabet::alphabet()
 
     while(getline(infile,wordIn))
     {
-        /*if(wordIn.length() > longest)
+        if(wordIn.length() > MAX_LENGTH)
         {
-            longest = wordIn.length();
-        } */
+            MAX_LENGTH = wordIn.length();
+        }
         alphabet::addWord(wordIn);
     }
     //cout << "Longest word is " << longest << " characters." << endl;
@@ -39,7 +41,7 @@ std::string alphabet::makeLower(std::string lower) //Be sure to put this in fron
     return lower;
 }
 
-letter* alphabet::findWord(std::string target)
+letter* alphabet::findWord(std::string target) //Only returns if it's a word.  Fudge.
 {
     target = makeLower(target);
     letter* temp = new letter;
@@ -83,7 +85,7 @@ letter* alphabet::addLetter(letter* parent, char baby)
 
 void alphabet::addWord(std::string name)
 {
-    cout << "Adding " << name << endl;
+    //cout << "Adding " << name << endl; //Uncomment this if you want
     letter* temp = new letter;
     letter* newLetter;
     temp = &head;
@@ -168,37 +170,96 @@ void alphabet::traverseDict()
     return;
 }
 
-void alphabet::recurPrint(letter* start, int minLength = 0, int maxLength = 20) //If don't provide pointer, start at head
+
+void alphabet::recurPrint(letter* start, int minLength, int maxLength) //If don't provide pointer, start at head
 {
-    if(start->isLeaf)
+
+    if(start->isLeaf && start->word.length() <= maxLength && start->word.length() >= minLength)
     {
-        cout << start->word << endl;
+        if(start->word.length() != 0)
+        {
+            cout << start->word << endl;
+        }
     }
     for(int i {}; i < start->children.size(); i++)
     {
-        recurPrint(start->children[i]);
+        recurPrint(start->children[i], minLength, maxLength);
     }
     return;
 }
 
-void alphabet::recurPrint(int minLength, int maxLength)
-{
-    recurPrint(&head, minLength, maxLength);
-}
 
-/*
-void alphabet::recurPrint(std::string start)
+void alphabet::recurPrint(std::string startStr, int minLength, int maxLength) //Called in main
 {
-    //This is how we start the whole thing
-    letter* temp = new letter;
-    if(start == "00000000")
+    letter* inPtr;
+    startStr = makeLower(startStr);
+    if(startStr.compare("") == 0)
     {
-        temp = &head;
+        inPtr = &head;
     }
     else
     {
-        temp = findWord(start);
+        inPtr = findWord(startStr);
+        if(inPtr == nullptr)
+        {
+            cout << "\"" << startStr << "\" was not found." << endl;
+            return;
+        }
+    }
+    if(maxLength == 100)
+    {
+        maxLength = MAX_LENGTH;
+    }
+    recurPrint(inPtr, minLength, maxLength);
+    return;
+}
+
+string alphabet::removePunct(std::string str)
+{
+    for(int i {}; i < str.length(); i++)
+        {
+            if(int(str[i]) == 39 || isalpha(str[i]) || int(str[i]) == 32)
+            {
+                continue;
+            }
+            else
+            {
+                str.erase(str.begin()+i);
+            }
+        }
+    return str;
+}
+
+void alphabet::spellCheck(std::string sentence)
+{
+    letter* currentWord;
+    char yn;
+    sentence = makeLower(sentence);
+    sentence = removePunct(sentence);
+    vector<string> wordList;
+    stringstream ss(sentence);
+    string token;
+
+    while(getline(ss,token, ' '))
+    {
+        wordList.push_back(token);
     }
 
+    for(int i {}; i < wordList.size(); i++)
+        {
+            currentWord = findWord(wordList[i]);
+            if(currentWord == nullptr)
+            {
+                cout << "The word \"" << wordList[i] << "\" was not found. \n Add to dictionary? Y/N: "<< endl;
+                cin >> yn;
+                if(yn == 'Y' || yn == 'y')
+                {
+                    addWord(wordList[i]);
+                    cout << "Succesfully added \"" << wordList[i] << "\" to dictionary." << endl;
+                }
+            }
+        }
+
+    cout << "Spell check complete!" << endl;
+    return;
 }
-*/

@@ -3,7 +3,7 @@
 
 using namespace std;
 
-alphabet dict;
+alphabet dict; //Create instance of dictionary
 
 bool menuDisp();
 
@@ -26,14 +26,15 @@ bool menuDisp()
     cout << "2. Search for a word" << endl;
     cout << "3. Print Dictionary Subset" << endl; //Could do by length, first letter or two, etc.
     cout << "4. Traverse Dictionary" << endl;
-    cout << ". Quit" << endl;
+    cout << "5. Spell Check" << endl;
+    cout << "6. Quit" << endl;
     cin >> choice;
 
     switch(choice)
     {
     case 1:
         {
-            dict.recurPrint();
+            dict.recurPrint();  //Prints all the words in the dictionary. Mostly for sense of scale
             break;
         }
     case 2:
@@ -47,6 +48,7 @@ bool menuDisp()
             found = dict.findWord(target);
             if(found == nullptr)
             {
+                cout << endl;
                 cout << "\"" << target << "\"" << " was not found" << endl;
                 cout << "Do you wish to add it to the dictionary? Y/N" << endl;
                 cin >> yn;
@@ -62,17 +64,80 @@ bool menuDisp()
             }
             else
             {
+                cout << endl;
                 cout << "Yes, " << "\"" << target << "\"" << " is a word." << endl;
             }
             break;
         }
     case 3:
         {
+            int toolChoice, maxOut, minOut;
+            string prefix;
+            letter* foundWord;
+            cout << endl;
+            cout << "=== Dictionary Subset Tool===" << endl;
+            cout << "1. Specify prefix" << endl;
+            cout << "2. Words of certain length" << endl;
+            cout << "3. Both of the above" << endl;
+            cout << "4. Back" << endl;
+            cin >> toolChoice;
+            switch(toolChoice)
+            {
+            case 1:
+                {
+                    cin.ignore();
+                    cout << "Enter the prefix: " << endl;
+                    cin >> prefix;
+                    dict.recurPrint(prefix);
+                    break;
+                }
+            case 2:
+                {
+                    cin.ignore();
+                    cout << "Enter the maximum length of the word" << endl;
+                    cin >> maxOut;
+                    cout << "Enter the minimum length of the word" << endl;
+                    cin >> minOut;
+                    dict.recurPrint("", minOut, maxOut);
+                    break;
+                }
+            case 3:
+                {
+                    cin.ignore();
+                    cout << "Enter a prefix: " << endl;
+                    getline(cin,prefix);
+                    cout << "Enter the maximum length of the word" << endl;
+                    cin >> maxOut;
+                    cout << "Enter the minimum length of the word" << endl;
+                    cin >> minOut;
+                    cout << maxOut << minOut << endl;
+                    if(minOut < 0 || maxOut < 0)
+                    {
+                        cout << "Please enter positive values, or 0." << endl;
+                        break;
+                    }
+                    dict.recurPrint(prefix, minOut, maxOut);
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+            }
             break;
         }
     case 4:
         {
             dict.traverseDict();
+            break;
+        }
+    case 5:
+        {
+            string sentence;
+            cin.ignore();
+            cout << "Enter a word or sentence you want to check the spelling of: " << endl;
+            getline(cin, sentence);
+            dict.spellCheck(sentence);
             break;
         }
     default:

@@ -1,15 +1,17 @@
 # depslib dependency file v1.0
-1461116046 source:c:\users\dbeat\desktop\2270final\trunk\beatty_csci2270_final\main.cpp
+1461214978 source:c:\users\dbeat\desktop\2270final\trunk\beatty_csci2270_final\main.cpp
 	<iostream>
 	"alphabet.h"
 
-1461117898 c:\users\dbeat\desktop\2270final\trunk\beatty_csci2270_final\include\alphabet.h
+1461123839 c:\users\dbeat\desktop\2270final\trunk\beatty_csci2270_final\include\alphabet.h
 	<vector>
 	<string>
 
-1461117917 source:c:\users\dbeat\desktop\2270final\trunk\beatty_csci2270_final\src\alphabet.cpp
+1461214679 source:c:\users\dbeat\desktop\2270final\trunk\beatty_csci2270_final\src\alphabet.cpp
 	"alphabet.h"
 	<fstream>
 	<iostream>
 	<algorithm>
+	<string.h>
+	<sstream>
 
