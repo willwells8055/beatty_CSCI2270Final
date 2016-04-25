@@ -98,6 +98,11 @@ bool menuDisp()
                     cin >> maxOut;
                     cout << "Enter the minimum length of the word" << endl;
                     cin >> minOut;
+                    if(minOut < 0 || maxOut < 0)
+                    {
+                        cout << "Please enter positive values, or 0." << endl;
+                        break;
+                    }
                     dict.recurPrint("", minOut, maxOut);
                     break;
                 }
@@ -110,7 +115,6 @@ bool menuDisp()
                     cin >> maxOut;
                     cout << "Enter the minimum length of the word" << endl;
                     cin >> minOut;
-                    cout << maxOut << minOut << endl;
                     if(minOut < 0 || maxOut < 0)
                     {
                         cout << "Please enter positive values, or 0." << endl;

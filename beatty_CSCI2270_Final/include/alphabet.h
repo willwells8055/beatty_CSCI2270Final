@@ -35,5 +35,6 @@ class alphabet
 
 // TODO
 //1. Finish readMe
+//2. Fix weird removePunct bug with punctuation at the end.
 
 #endif // ALPHABET_H

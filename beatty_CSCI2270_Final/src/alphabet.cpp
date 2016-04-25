@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <string.h>
 #include <sstream>
+#include <ctype.h>
 
 using namespace std;
 
@@ -27,7 +28,8 @@ alphabet::alphabet()
         }
         alphabet::addWord(wordIn);
     }
-    //cout << "Longest word is " << longest << " characters." << endl;
+
+    addWord("i");  //Wasn't in the dictionary for some reason
 }
 
 alphabet::~alphabet()
@@ -217,7 +219,7 @@ string alphabet::removePunct(std::string str)
             }
             else
             {
-                str.erase(str.begin()+i);
+                str.erase(str.begin()+i,str.begin()+i+2);  //PROBLEM CHILD
             }
         }
     return str;
@@ -228,7 +230,7 @@ void alphabet::spellCheck(std::string sentence)
     letter* currentWord;
     char yn;
     sentence = makeLower(sentence);
-    sentence = removePunct(sentence);
+    sentence = removePunct(sentence); //Takes care of numbers as well
     vector<string> wordList;
     stringstream ss(sentence);
     string token;
