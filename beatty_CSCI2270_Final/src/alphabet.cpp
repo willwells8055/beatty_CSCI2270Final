@@ -144,6 +144,15 @@ void alphabet::traverseDict()
             cout << i+1 << ": " << temp->children[i]->key << endl;
         }
         cin >> choice;
+        // if user didn't input a number
+        if(cin.fail())
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(),'\n'); //skip bad input
+            //request new input
+            cout<<"Please enter a valid input"<<endl;
+            cin>>choice;
+        }
         if(choice == 0)
         {
             if(temp == &head)
@@ -161,6 +170,7 @@ void alphabet::traverseDict()
         {
             temp = temp->children[choice-1];
         }
+
     }
     return;
 }
